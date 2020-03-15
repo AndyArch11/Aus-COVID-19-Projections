@@ -1,0 +1,59 @@
+Australian Population 15/3/2020
+https://www.abs.gov.au/ausstats/abs@.nsf/0/1647509ef7e25faaca2568a900154b63?opendocument
+https://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3101.0Jun%202019?OpenDocument
+
+Population: 25,632,684
+
+N.B. Queensland Health predicts one in four Australians will eventually contract the virus
+Infection doubling rates are regarded as 6-8 days, but Australia is currently seeing doubling every 3 -4 days of diagnosed people. However, this could be due to increased testing.
+Total mortality as stated by WHO is 2 - 3%, but the Lancet believes it to be more like 5-7%
+
+Hospital Beds
+https://www.aihw.gov.au/reports/hospitals/hospital-resources-2017-18-ahs/contents/hospitals-and-average-available-beds
+https://ama.com.au/sites/default/files/public-hospital-report-cards/AMA%20Public%20Hospital%20Report%20Card%202018_0.pdf
+
+COVID-19
+https://ama.com.au/article/update-novel-coronavirus-covid-19
+https://ourworldindata.org/coronavirus
+https://informationisbeautiful.net/visualizations/covid-19-coronavirus-infographic-datapack/
+https://www.worldometers.info/coronavirus/
+https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30195-X/fulltext
+https://www1.racgp.org.au/newsgp/clinical/examining-factors-that-worsen-coronavirus-severity
+https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30566-3/fulltext
+
+1. Age > 60, esp > 80
+15% mortality > 80 years of age
+
+2. Cardiovascular Disease
+10.5% mortality
+https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main%20Features~Heart%20disease~10005
+5% of pop with heart disease
+
+3. Diabetes
+7.3% mortality
+https://map.ndss.com.au/#!/
+https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main%20Features~Diabetes~10004
+4.6% of pop with Diabetes
+
+4. Chronic Respiratory Disease
+6.3% mortality
+https://www.aihw.gov.au/reports-data/health-conditions-disability-deaths/chronic-respiratory-conditions/overview
+31% of pop with chronic respiratory conditions
+4.8% of pop over 45 with COPD
+
+https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main%20Features~Asthma~15
+10.2% of pop with asthma
+
+5. Hypertension
+6% mortality
+https://www.heartfoundation.org.au/images/uploads/main/HeartWeek_fact_sheet_for_professionals.pdf
+33.7% of pop with Hypertension
+
+6. Cancer
+5.6% mortality
+https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main%20Features~Cancer~16
+1.5% of pop with cancer
+
+7. Smoking
+https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main%20Features~Tobacco%20smoking~10008
+16.1% of pop smoke daily
