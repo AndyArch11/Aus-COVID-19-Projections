@@ -57,3 +57,61 @@ https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main
 7. Smoking
 https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main%20Features~Tobacco%20smoking~10008
 16.1% of pop smoke daily
+
+
+______________________________________________________________________________________________________________________
+
+USA
+
+Population
+https://www.worldometers.info/world-population/us-population/
+
+8/4/2020
+330,565,500
+
+Hospital beds / 1,000
+2.4
+https://www.kff.org/other/state-indicator/beds-by-ownership/?currentTimeframe=0&selectedRows=%7B%22wrapups%22:%7B%22united-states%22:%7B%7D%7D%7D&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+
+ICU beds / 100,000
+34.7
+https://en.wikipedia.org/wiki/List_of_countries_by_hospital_beds
+
+US detected cases
+https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html#investigation
+
+US deaths
+https://www.cdc.gov/nchs/nvss/vsrr/COVID19/index.htm
+https://www.worldometers.info/coronavirus/country/us/
+
+US only detecting 1 in 10 cases
+https://cid.utexas.edu/sites/default/files/cid/files/covid-risk-maps_counties_4.3.2020.pdf?m=1585958755
+
+Social policies implemented
+https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/
+
+US hospitalisation rates by age
+https://www.cdc.gov/mmwr/volumes/69/wr/mm6912e2.htm?s_cid=mm6912e2_w
+
+US Cardiovascular health
+https://healthmetrics.heart.org/wp-content/uploads/2019/02/At-A-Glance-Heart-Disease-and-Stroke-Statistics-%E2%80%93-2019.pdf
+
+US Cancer Incidence rates
+https://acsjournals.onlinelibrary.wiley.com/doi/full/10.3322/caac.21551
+https://www.cancer.gov/about-cancer/understanding/statistics
+N.B Australia has 3 - 4 times the incidence of cancer as the US, so either AU does actually have more cancer such as skin cancer, or the US does not diagnose rates of cancer as effectively, presumably due to their health system and cost barriers?
+
+Chronic Respiratory Disease
+https://www.lung.org/research/trends-in-lung-disease/estimated-prevalence-and-incidence-of-lung-dis-(1)/methodology
+https://www.cdc.gov/copd/data.html
+N.B. US does not appear to have a good handle on prevalance rates, most stats are on morbidity rates and classification might also be different to AU, which could explain difference in percentage rates between the two countries.
+
+
+
+
+
+
+
+
+
+
