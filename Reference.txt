@@ -60,7 +60,6 @@ https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/4338.0~2011-13~Main
 
 
 ______________________________________________________________________________________________________________________
-
 USA
 
 Population
@@ -105,6 +104,93 @@ Chronic Respiratory Disease
 https://www.lung.org/research/trends-in-lung-disease/estimated-prevalence-and-incidence-of-lung-dis-(1)/methodology
 https://www.cdc.gov/copd/data.html
 N.B. US does not appear to have a good handle on prevalance rates, most stats are on morbidity rates and classification might also be different to AU, which could explain difference in percentage rates between the two countries.
+
+
+______________________________________________________________________________________________________________________
+India
+
+Population
+https://countrymeters.info/en/India
+
+Demographics
+https://en.wikipedia.org/wiki/Demographics_of_India
+
+Social policies implemented
+https://iclg.com/briefing/11264-covid-19-in-india-travel-restrictions-and-lockdown-measures
+
+Indian Cardiovascular Health
+http://www.onlinejacc.org/content/72/1/79
+
+Indian Diabetic rates
+https://idf.org/our-network/regions-members/south-east-asia/members/94-india.html
+8.9%
+https://www.livemint.com/science/health/government-survey-found-11-8-prevalence-of-diabetes-in-india-11570702665713.html
+11.8%
+
+Chronic Respiratory Disease
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6219134/
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3775194/
+20% estimate
+N.B. Current rates known to be significantly less than official numbers.
+
+Hypertension
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4011565/
+29.8%
+
+Cancer
+https://www.thelancet.com/journals/lanonc/article/PIIS1470-2045(18)30839-8/fulltext
+
+Smokers
+https://www.who.int/tobacco/surveillance/en_tfi_india_gats_fact_sheet.pdf
+
+______________________________________________________________________________________________________________________
+Indonesia
+
+Population
+https://www.worldometers.info/world-population/indonesia-population/
+
+Demographics
+https://www.populationof.net/indonesia/
+
+Hospital beds
+https://www.who.int/workforcealliance/countries/Indonesia_En.pdf
+6 per 10,000
+https://2016.export.gov/industry/health/healthcareresourceguide/eg_main_108589.asp
+1.17 per 1,000
+https://www.ceicdata.com/en/indonesia/number-of-hospital-beds
+281,082 public beds 
+https://www.reuters.com/article/us-health-coronavirus-indonesia-response/indonesias-health-system-on-the-brink-as-coronavirus-surge-looms-idUSKBN21C0J6
+12 beds per 10,000
+2.7 ICU beds per 100,000
+https://apps.who.int/iris/bitstream/handle/10665/254716/9789290225164-eng.pdf
+1.26 beds per 1000
+
+Cardiovascular disease
+https://www.ncbi.nlm.nih.gov/pubmed/31039155
+29.2%
+
+Diabetes
+https://www.who.int/diabetes/country-profiles/idn_en.pdf
+7%
+
+Chronic Respiratory Disease
+https://clinmedjournals.org/articles/ijrpm/international-journal-of-respiratory-and-pulmonary-medicine-ijrpm-3-048.pdf
+4.5% COPD (only a certain form of Chronic Respiratory Disease)
+
+Hypertension
+https://www.hindawi.com/journals/ijhy/2018/5610725/
+33.4%
+
+Cancer
+https://iranjournals.nlai.ir/article_503479_99bcc6262a2d42ee78b4e9b5dd664c63.pdf
+4.3 per 1,000
+
+Smoking
+https://apps.who.int/iris/bitstream/handle/10665/272673/wntd_2018_indonesia_fs.pdf?sequence=1
+34.8%
+
+
+
 
 
 
