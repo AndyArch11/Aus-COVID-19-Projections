@@ -35,10 +35,10 @@ def load_covid_deaths(download):
     return pd.read_csv(covid_data_filepath, usecols=['date', 'location', 'new_deaths', 'total_deaths'], parse_dates=['date'], index_col=['date']) #dropping 'new_cases' and 'total_cases' columns
 
 def read_US_mortality_stats():
-    us_conflicts = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=1, usecols=['Conflict', 'US Deaths', 'Daily Deaths'], nrows=17)
-    us_leading_causes = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=21, usecols=['Leading Causes', 'US Deaths', 'Daily Deaths'], nrows=11)
-    us_epidemics = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=35, usecols=['Epidemic', 'US Deaths', 'Daily Deaths'], nrows=11)
-    us_disasters = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=49, usecols=['US Disasters', 'US Deaths'], nrows=17)
+    us_conflicts = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=1, usecols=['Conflict', 'US Deaths', 'Daily Deaths'], nrows=18)
+    us_leading_causes = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=22, usecols=['Leading Causes', 'US Deaths', 'Daily Deaths'], nrows=11)
+    us_epidemics = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=36, usecols=['Epidemic', 'US Deaths', 'Daily Deaths'], nrows=11)
+    us_disasters = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=50, usecols=['US Disasters', 'US Deaths'], nrows=17)
 
     return us_conflicts, us_leading_causes, us_epidemics, us_disasters
 
@@ -64,7 +64,7 @@ def daily_covid_deaths_matplotlib(title, usdf, scale, usmortalitydf, mortality_c
     add_mortality_lines(ax, usdf, usmortalitydf, mortality_count_column, mortality_type_column, unit)    
     
     #Colormaps https://matplotlib.org/1.2.1/examples/pylab_examples/show_colormaps.html
-    colormap = plt.cm.gist_rainbow
+    colormap = plt.get_cmap("gist_rainbow")
     colors = [colormap(i) for i in np.linspace(0, 1, len(ax.lines))]
     for i,j in enumerate(ax.lines):
         j.set_color(colors[i])
@@ -87,7 +87,7 @@ def total_covid_deaths_matplotlib(title, usdf, scale, usmortalitydf, mortality_c
     add_mortality_lines(ax, usdf, usmortalitydf, mortality_count_column, mortality_type_column, unit)    
     
     #Colormaps https://matplotlib.org/1.2.1/examples/pylab_examples/show_colormaps.html
-    colormap = plt.cm.gist_rainbow
+    colormap = plt.get_cmap("gist_rainbow")
     colors = [colormap(i) for i in np.linspace(0, 1, len(ax.lines))]
     for i,j in enumerate(ax.lines):
         j.set_color(colors[i])
@@ -142,7 +142,7 @@ def add_mortality_traces(fig, usdf, usmortalitydf, mortality_count_column, morta
         fig.add_trace(go.Scatter(x=usdf.index, y=np.linspace(row[mortality_count_column], row[mortality_count_column], len(usdf)), name=(row[mortality_type_column] + ': ' + total_deaths_str + unit), line = dict(width=1)))
 
 def main():
-    coviddf = load_covid_deaths(False)
+    coviddf = load_covid_deaths(True)
     usdf = coviddf[(coviddf.location == 'United States') & (coviddf.total_deaths > 0)]
 
     us_conflicts_df, us_leading_causes_df, us_epidemics_df, us_disasters_df = read_US_mortality_stats()
@@ -159,11 +159,11 @@ def main():
 
     #Plotly Charts
     daily_covid_deaths_plotly('US Conflicts, Daily Death Rates', usdf, 'linear', us_conflicts_df, 'Daily Deaths', 'Conflict', ' deaths/day')
-    #total_covid_deaths_plotly('US Conflicts', usdf, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' deaths')
+    total_covid_deaths_plotly('US Conflicts', usdf, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' deaths')
     #daily_covid_deaths_plotly('US Leading Causes of Death, Daily Death Rates', usdf, 'linear', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' deaths/day')
     #total_covid_deaths_plotly('US Leading Causes of Death', usdf, 'log', us_leading_causes_df, 'US Deaths', 'Leading Causes', ' deaths')
-    #daily_covid_deaths_plotly('US Epidemics, Daily Death Rates', usdf, 'linear', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' deaths/day')
-    #total_covid_deaths_plotly('US Epidemics', usdf, 'log', us_epidemics_df, 'US Deaths', 'Epidemic', ' deaths')
+    daily_covid_deaths_plotly('US Epidemics, Daily Death Rates', usdf, 'linear', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' deaths/day')
+    total_covid_deaths_plotly('US Epidemics', usdf, 'log', us_epidemics_df, 'US Deaths', 'Epidemic', ' deaths')
     #daily_covid_deaths_plotly('US Disasters', usdf, 'linear', us_disasters_df, 'US Deaths', 'US Disasters', ' deaths')
     #total_covid_deaths_plotly('US Disasters', usdf, 'log', us_disasters_df, 'US Deaths', 'US Disasters', ' deaths')
 
