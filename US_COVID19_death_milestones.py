@@ -5,6 +5,7 @@ import numpy as np
 
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -32,7 +33,7 @@ def load_covid_deaths(download):
             print('Error retrieving file from World In Data: ' + response.status_code)
     
     print('Reading local file')
-    return pd.read_csv(covid_data_filepath, usecols=['date', 'location', 'new_deaths', 'total_deaths'], parse_dates=['date'], index_col=['date']) #dropping 'new_cases' and 'total_cases' columns
+    return pd.read_csv(covid_data_filepath, usecols=['date', 'location', 'new_deaths', 'total_deaths', 'new_cases'], parse_dates=['date'], index_col=['date']) #dropping 'total_cases' column
 
 def read_US_mortality_stats():
     us_conflicts = pd.read_excel('./USA COVID-19 Infection Projections.xlsx', 'US Deaths', header=1, usecols=['Conflict', 'US Deaths', '% US Population', 'Daily Deaths'], nrows=18)
@@ -46,30 +47,34 @@ def daily_covid_deaths_matplotlib(title, usdf, scale, usmortalitydf, mortality_c
     #print(plt.style.available)
     #['bmh', 'classic', 'dark_background', 'fast', 'fivethirtyeight', 'ggplot', 'grayscale', 'seaborn-bright', 'seaborn-colorblind', 'seaborn-dark-palette', 'seaborn-dark', 'seaborn-darkgrid', 'seaborn-deep', 'seaborn-muted', 'seaborn-notebook', 'seaborn-paper', 'seaborn-pastel', 'seaborn-poster', 'seaborn-talk', 'seaborn-ticks', 'seaborn-white', 'seaborn-whitegrid', 'seaborn', 'Solarize_Light2', 'tableau-colorblind10', '_classic_test']
     #plt.style.use('ggplot')
-    fig, ax = plt.subplots(figsize=(12, 12))
+    fig, ax1 = plt.subplots(figsize=(12, 12))
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Confirmed Cases')
+    ax2.plot(usdf.index.values, usdf.new_cases, label='US Covid-19 Daily Confirmed Cases', color='0.6')
     xlabel = 'Date: ' + usdf.index[0].strftime('%d/%m/%Y') + ' - ' + usdf.index[-1].strftime('%d/%m/%Y') + ', ' + str(usdf.index[-1] - usdf.index[0])[:-9]
-    ax.set(xlabel=xlabel, ylabel='Deaths', yscale=scale, title='US COVID-19 Reported Deaths per Day vs ' + title)
-    ax.bar(usdf.index.values, usdf.new_deaths, label='US Covid-19 Deaths reported on that day')
+    ax1.set(xlabel=xlabel, ylabel='Deaths', yscale=scale, title='US COVID-19 Reported Deaths per Day vs ' + title)
+    ax1.bar(usdf.index.values, usdf.new_deaths, label='US Covid-19 Deaths reported on that day')
     date_format = ('%d %b')
-    ax.xaxis.set_major_locator(mdates.WeekdayLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter(date_format))
-    ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda y, p: format(int(y), ',')))
+    ax1.xaxis.set_major_locator(mdates.WeekdayLocator())
+    ax1.xaxis.set_major_formatter(mdates.DateFormatter(date_format))
+    ax1.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda y, p: format(int(y), ',')))
+    ax2.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda y, p: format(int(y), ',')))
     
-    avg_deaths = usdf.mean(axis=0)
-    avg_deaths_str = '{:,.1f}'.format(avg_deaths[0])
+    avg_deaths = usdf.loc[:,"new_deaths"].mean()
+    avg_deaths_str = '{:,.1f}'.format(avg_deaths)
     if avg_deaths_str.endswith('.0'):
         avg_deaths_str = avg_deaths_str[:-2]
-    ax.axhline(y=avg_deaths[0], label='Average COVID-19 Deaths: ' + avg_deaths_str + ' deaths/day', linestyle='--', linewidth=1)
+    ax1.axhline(y=avg_deaths, label='Average COVID-19 Deaths: ' + avg_deaths_str + ' deaths/day', linestyle='--', linewidth=1)
 
-    add_mortality_lines(ax, usdf, usmortalitydf, '{:,.1f}', mortality_count_column, mortality_type_column, unit)    
+    add_mortality_lines(ax1, usdf, usmortalitydf, '{:,.1f}', mortality_count_column, mortality_type_column, unit)    
     
     #Colormaps https://matplotlib.org/1.2.1/examples/pylab_examples/show_colormaps.html
     colormap = plt.get_cmap("gist_rainbow")
-    colors = [colormap(i) for i in np.linspace(0, 1, len(ax.lines))]
-    for i,j in enumerate(ax.lines):
+    colors = [colormap(i) for i in np.linspace(0, 1, len(ax1.lines))]
+    for i,j in enumerate(ax1.lines):
         j.set_color(colors[i])
 
-    ax.legend(loc="best")
+    ax1.legend(loc="best")
 
     plt.show()
 
@@ -78,8 +83,7 @@ def percentage_covid_deaths_matplotlib(title, usdf, scale, usmortalitydf, mortal
     xlabel = 'Date: ' + usdf.index[0].strftime('%d/%m/%Y') + ' - ' + usdf.index[-1].strftime('%d/%m/%Y') + ', ' + str(usdf.index[-1] - usdf.index[0])[:-9]
     ax.set(xlabel=xlabel, ylabel='Deaths as percentage of population', yscale=scale, title='US COVID-19 Reported Deaths per Day as percentage of population vs ' + title)
     uspercdf = usdf['total_deaths'].apply(lambda x: (x / 330565500) * 100).copy()
-    print(uspercdf)
-    ax.plot(usdf.index.values, uspercdf[0:], label='US Covid-19 Deaths as percentage of population')
+    ax.plot(usdf.index.values, uspercdf[0:], label='US Covid-19 Deaths: ' + '{:,.3f}'.format(uspercdf.iloc[-1]) + '% of population')
     date_format = ('%d %b')
     ax.xaxis.set_major_locator(mdates.WeekdayLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter(date_format))
@@ -102,7 +106,7 @@ def total_covid_deaths_matplotlib(title, usdf, scale, usmortalitydf, mortality_c
     fig, ax = plt.subplots(figsize=(12, 12))
     xlabel = 'Date: ' + usdf.index[0].strftime('%d/%m/%Y') + ' - ' + usdf.index[-1].strftime('%d/%m/%Y') + ', ' + str(usdf.index[-1] - usdf.index[0])[:-9]
     ax.set(xlabel=xlabel, ylabel='Deaths', yscale=scale, title='US COVID-19 Reported Cumulative Deaths vs ' + title)
-    ax.plot(usdf.index.values, usdf.total_deaths, label='US Covid-19 Deaths reported on that day')
+    ax.plot(usdf.index.values, usdf.total_deaths, label='US Covid-19 Deaths - total: ' + '{:,.0f}'.format(usdf['total_deaths'][-1]))
     date_format = ('%d %b')
     ax.xaxis.set_major_locator(mdates.WeekdayLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter(date_format))
@@ -130,29 +134,35 @@ def add_mortality_lines(ax, usdf, usmortalitydf, str_format, mortality_count_col
 
 
 def daily_covid_deaths_plotly(title, usdf, scale, usmortalitydf, mortality_count_column, mortality_type_column, unit):
-    fig = go.Figure(layout_title_text='US COVID-19 Reported Deaths per Day vs ' + title)
-    fig.add_trace(go.Bar(x=usdf.index, y=usdf.new_deaths, name='US Covid-19 Deaths reported on that day'))
+    #fig = go.Figure(layout_title_text='US COVID-19 Reported Deaths per Day vs ' + title)    
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(go.Scatter(x=usdf.index, y=usdf.new_cases, name=('New Confirmed Cases'), line=dict(width=1, dash='dot', color='rgb(100,100,100)')), secondary_y=True)
+    fig.add_trace(go.Bar(x=usdf.index, y=usdf.new_deaths, name='US Covid-19 Deaths reported on that day'), secondary_y=False)
 
-    avg_deaths = usdf.mean(axis=0)
-    avg_deaths_str = '{:,.1f}'.format(avg_deaths[0])
+    avg_deaths = usdf.loc[:,"new_deaths"].mean()
+    avg_deaths_str = '{:,.1f}'.format(avg_deaths)
     if avg_deaths_str.endswith('.0'):
         avg_deaths_str = avg_deaths_str[:-2]
-    fig.add_trace(go.Scatter(x=usdf.index, y=np.linspace(avg_deaths[0], avg_deaths[0], len(usdf)), name=('Average COVID-19 Deaths: ' + avg_deaths_str + ' deaths/day'), line = dict(width=1, dash='dot')))
+    fig.add_trace(go.Scatter(x=usdf.index, y=np.linspace(avg_deaths, avg_deaths, len(usdf)), name=('Average COVID-19 Deaths: ' + avg_deaths_str + ' deaths/day'), line=dict(width=1, dash='dot')), secondary_y=False)
 
-    add_mortality_traces(fig, usdf, usmortalitydf, '{:,.1f}', mortality_count_column, mortality_type_column, unit)    
+    add_mortality_traces(fig, usdf, usmortalitydf, '{:,.1f}', mortality_count_column, mortality_type_column, unit, True)    
     
     xlabel = 'Date: ' + usdf.index[0].strftime('%d/%m/%Y') + ' - ' + usdf.index[-1].strftime('%d/%m/%Y') + ', ' + str(usdf.index[-1] - usdf.index[0])[:-9]
-    fig.update_layout(yaxis_type=scale, xaxis_title=xlabel, yaxis_title='Deaths')
+    fig.update_layout(yaxis_type=scale, xaxis_title=xlabel)
+
+    # Set y-axes titles
+    fig.update_yaxes(title_text="Deaths", secondary_y=False)
+    fig.update_yaxes(title_text="Daily Confirmed Cases", secondary_y=True)
     
     fig.show(renderer = 'browser') #'json', 'png', 'jpeg', 'jpg', 'svg', 'pdf', 'browser', 'firefox', 'chrome', 'chromium'    
 
 def percentage_covid_deaths_plotly(title, usdf, scale, usmortalitydf, mortality_count_column, mortality_type_column, unit):
     fig = go.Figure(layout_title_text='US COVID-19 Reported Deaths per Day as percentage of population vs ' + title)
     uspercdf = usdf['total_deaths'].apply(lambda x: (x / 330565500) * 100).copy()
-    fig.add_trace(go.Scatter(x=usdf.index, y=uspercdf[0:], name='US Covid-19 Deaths as percentage of population'))
+    fig.add_trace(go.Scatter(x=usdf.index, y=uspercdf[0:], name='US Covid-19 Deaths: ' + '{:,.3f}'.format(uspercdf.iloc[-1]) + '% of population'))
     
     usmortalitydf['perc_deaths'] = usmortalitydf[mortality_count_column].apply(lambda x: x * 100)
-    add_mortality_traces(fig, usdf, usmortalitydf, '{:,.3f}', 'perc_deaths', mortality_type_column, unit)    
+    add_mortality_traces(fig, usdf, usmortalitydf, '{:,.3f}', 'perc_deaths', mortality_type_column, unit, False)    
 
     xlabel = 'Date: ' + usdf.index[0].strftime('%d/%m/%Y') + ' - ' + usdf.index[-1].strftime('%d/%m/%Y') + ', ' + str(usdf.index[-1] - usdf.index[0])[:-9]
     fig.update_layout(yaxis_type=scale, xaxis_title=xlabel, yaxis_title='Deaths as percentage of population')
@@ -162,22 +172,25 @@ def percentage_covid_deaths_plotly(title, usdf, scale, usmortalitydf, mortality_
 
 def total_covid_deaths_plotly(title, usdf, scale, usmortalitydf, mortality_count_column, mortality_type_column, unit):
     fig = go.Figure(layout_title_text='US COVID-19 Reported Cumulative Deaths vs ' + title)
-    fig.add_trace(go.Scatter(x=usdf.index, y=usdf.total_deaths, name='US Covid-19 Deaths reported on that day'))
+    fig.add_trace(go.Scatter(x=usdf.index, y=usdf.total_deaths, name='US Covid-19 Deaths - total: ' + '{:,.0f}'.format(usdf['total_deaths'][-1])))
 
-    add_mortality_traces(fig, usdf, usmortalitydf, '{:,.1f}', mortality_count_column, mortality_type_column, unit)    
+    add_mortality_traces(fig, usdf, usmortalitydf, '{:,.1f}', mortality_count_column, mortality_type_column, unit, False)    
 
     xlabel = 'Date: ' + usdf.index[0].strftime('%d/%m/%Y') + ' - ' + usdf.index[-1].strftime('%d/%m/%Y') + ', ' + str(usdf.index[-1] - usdf.index[0])[:-9]
     fig.update_layout(yaxis_type=scale, xaxis_title=xlabel, yaxis_title='Deaths')
     
     fig.show(renderer = 'browser') #'json', 'png', 'jpeg', 'jpg', 'svg', 'pdf', 'browser', 'firefox', 'chrome', 'chromium' 
 
-def add_mortality_traces(fig, usdf, usmortalitydf, str_format, mortality_count_column, mortality_type_column, unit):
+def add_mortality_traces(fig, usdf, usmortalitydf, str_format, mortality_count_column, mortality_type_column, unit, has_secondary_y):
     sorted_mortality_df = usmortalitydf.sort_values(by=mortality_count_column, ascending=False)
     for index, row in sorted_mortality_df.iterrows():
         total_deaths_str = str_format.format(row[mortality_count_column])
         if total_deaths_str.endswith('.0'):
             total_deaths_str = total_deaths_str[:-2]
-        fig.add_trace(go.Scatter(x=usdf.index, y=np.linspace(row[mortality_count_column], row[mortality_count_column], len(usdf)), name=(row[mortality_type_column] + ': ' + total_deaths_str + unit), line = dict(width=1)))
+        if has_secondary_y:
+            fig.add_trace(go.Scatter(x=usdf.index, y=np.linspace(row[mortality_count_column], row[mortality_count_column], len(usdf)), name=(row[mortality_type_column] + ': ' + total_deaths_str + unit), line = dict(width=1)), secondary_y=False)
+        else:
+            fig.add_trace(go.Scatter(x=usdf.index, y=np.linspace(row[mortality_count_column], row[mortality_count_column], len(usdf)), name=(row[mortality_type_column] + ': ' + total_deaths_str + unit), line = dict(width=1)))
 
 def main():
     coviddf = load_covid_deaths(True)
@@ -199,6 +212,7 @@ def main():
     #percentage_covid_deaths_matplotlib('US Disasters as percentage of population', usdf, 'log', us_disasters_df, '% US Population', 'US Disasters', '% of population')
     #total_covid_deaths_matplotlib('US Disasters', usdf, 'log', us_disasters_df, 'US Deaths', 'US Disasters', ' deaths')
 
+    
     #Plotly Charts
     daily_covid_deaths_plotly('US Conflicts, Daily Death Rates', usdf, 'linear', us_conflicts_df, 'Daily Deaths', 'Conflict', ' deaths/day')
     percentage_covid_deaths_plotly('US Conflicts as percentage of population', usdf, 'log', us_conflicts_df, '% US Population', 'Conflict', '% of population')
