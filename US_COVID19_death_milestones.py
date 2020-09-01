@@ -301,6 +301,8 @@ def total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, mortality
 
 def animated_total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, mortality_count_column, mortality_type_column, unit, date_from):
     number_frames = (usdf.index[-1] - date_from).days + 1
+    frame_duration = 300
+    frame_transition_duration = 200
 
     us_sorted_mortality = usmortalitydf.sort_values(by=mortality_count_column, ascending=True)
     init_x_data = us_sorted_mortality[mortality_count_column]
@@ -325,7 +327,7 @@ def animated_total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, 
         sorted_current_day['colours'] = colours
         covid_progress.append(sorted_current_day)
 
-        step = dict(method='animate', args=[[day], dict(mode='immediate', transition=dict(duration=300), frame=dict(duration=300, redraw=True))], label=current_year.strftime('%d/%m/%y'))
+        step = dict(method='animate', args=[[day], dict(mode='immediate', transition=dict(duration=frame_transition_duration), frame=dict(duration=frame_duration, redraw=True))], label=current_year.strftime('%d/%m/%y'))
         steps.append(step)
 
     upper_range = covid_progress[-1][mortality_count_column].nlargest(1)[len(covid_progress[-1][mortality_count_column])-1]
@@ -343,17 +345,17 @@ def animated_total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, 
                 type="buttons",
                 buttons=[dict(label="Play", 
                                 method="animate", 
-                                args=[None, dict(frame=dict(duration=500, redraw=True), fromcurrent=True, transition=dict(duration=300, easing='quadratic-in-out'))]),
+                                args=[None, dict(frame=dict(duration=frame_duration, redraw=True), fromcurrent=True, transition=dict(duration=frame_transition_duration, easing='quadratic-in-out'))]),
                         dict(label="Pause", 
                                 method="animate", 
                                 args=[[None], dict(frame=dict(duration=0, redraw=True), mode='immediate', transition=dict(duration=0))])],
                 direction='left',
-                pad=dict(r=10, t=87),
                 showactive=False,
-                x=0.1,
                 xanchor='right',
-                y=0,
-                yanchor='top')],
+                yanchor='top',
+                pad=dict(r=10, t=180),
+                x=0.1,
+                y=0)],
             sliders=[dict(
                 active=0, 
                 yanchor='top', 
@@ -363,7 +365,7 @@ def animated_total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, 
                     prefix='Date: ', 
                     visible=True, 
                     xanchor='right'),
-                transition=dict(duration=200, easing='cubic-in-out'), 
+                transition=dict(duration=frame_transition_duration, easing='cubic-in-out'), 
                 pad=dict(b=10, t=50), 
                 len=0.9, 
                 x=0.1, 
@@ -378,7 +380,7 @@ def animated_total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, 
                 orientation='h',
                 marker_color=covid_progress[day_frame]['colours'])],
             layout=go.Layout(
-                title_text=title + ' - Day: ' + str(day_frame + 1) + ', ' + (date_from + timedelta(days=day_frame)).strftime('%d/%m/%Y') + '. US Covid Cases: ' + '{:,.0f}'.format(int(usdf[(date_from + timedelta(days=day_frame)):(date_from + timedelta(days=day_frame))]['total_cases'])) + '. US Covid Deaths: ' + '{:,.0f}'.format(int(covid_progress[day_frame].loc[(covid_progress[day_frame][mortality_type_column] == 'COVID-19 US Deaths')][mortality_count_column]))
+                title_text=title + ' - Day: ' + str(day_frame) + ', ' + (date_from + timedelta(days=day_frame)).strftime('%d/%m/%Y') + '. US Covid Cases: ' + '{:,.0f}'.format(int(usdf[(date_from + timedelta(days=day_frame)):(date_from + timedelta(days=day_frame))]['total_cases'])) + '. US Covid Deaths: ' + '{:,.0f}'.format(int(covid_progress[day_frame].loc[(covid_progress[day_frame][mortality_type_column] == 'COVID-19 US Deaths')][mortality_count_column]))
                 ))
             for day_frame in range(number_frames)]
     )
@@ -435,15 +437,16 @@ def main():
 
     #_______________________________________________________________________________________________________________________________________________
 
+    #Animated horizontal Plotly Charts
     #animated_total_covid_deaths_horiz_plotly('US Conflicts', usdf_full, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' US deaths', date_first_covid_death)
     #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_full, 'log', us_leading_causes_df, 'US Deaths', 'Leading Causes', ' US deaths', year_start)
     #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_full, 'log', us_epidemics_df, 'US Deaths', 'Epidemic', ' US deaths', year_start)
 
-    #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_cases, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_case)
-    #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_cases, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_case)
+    animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_cases, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_case)
+    animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_cases, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_case)
 
-    #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_death)
-    #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_death)
+    animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_death)
+    animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_death)
     #exit()
 
     #_______________________________________________________________________________________________________________________________________________
