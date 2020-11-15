@@ -32,13 +32,13 @@ def load_covid_deaths(download):
         #All datasources are pooblematic, currently using Our World in Data, but it could change
         response = requests.get(worldindata_covid_full_url, allow_redirects=True)
         if response.status_code == 200:
+            print('File retrieved from Internet')
             try:
                 #Save file for future reference, rather than download it directly into a panda dataframe
                 open(covid_data_filepath, 'wb').write(response.content)
+                print('File written to disk')
             except IOError:
                 print('Error writing file to disk')
-            finally:
-                print('File written to disk')
         else:
             print('Error retrieving file from World In Data: ' + response.status_code)
     
