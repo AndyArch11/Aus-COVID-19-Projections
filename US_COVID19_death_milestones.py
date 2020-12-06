@@ -18,7 +18,9 @@ import matplotlib.dates as mdates
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
-worldindata_covid_full_url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
+#ECDC changed to weekly reporting, so Our World In Data changed to John Hopkins University to source their data, requiring change in path
+#worldindata_covid_full_url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
+worldindata_covid_full_url = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
 covid_data_filepath = './world_in_data_covid_full.csv'
 
 US_2020_Pop = 330565500
@@ -441,6 +443,8 @@ def main():
     #_______________________________________________________________________________________________________________________________________________
 
     #Animated horizontal Plotly Charts
+    
+    # data set no longer begins at the start of the year - the following three no longer work.
     #animated_total_covid_deaths_horiz_plotly('US Conflicts', usdf_full, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' US deaths', year_start)
     #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_full, 'log', us_leading_causes_df, 'US Deaths', 'Leading Causes', ' US deaths', year_start)
     #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_full, 'log', us_epidemics_df, 'US Deaths', 'Epidemic', ' US deaths', year_start)
