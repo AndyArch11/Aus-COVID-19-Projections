@@ -31,7 +31,7 @@ date_first_covid_death = datetime.now()
 def load_covid_deaths(download):
     if download:
         print('Retrieving file from Internet')
-        #All datasources are pooblematic, currently using Our World in Data, but it could change
+        #All datasources are problematic, currently using Our World in Data, but it could change
         response = requests.get(worldindata_covid_full_url, allow_redirects=True)
         if response.status_code == 200:
             print('File retrieved from Internet')
