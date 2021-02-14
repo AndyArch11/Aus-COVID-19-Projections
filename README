@@ -1,4 +1,8 @@
-Excel naive projection of COVID-19 in Australia. Have since added Excel spreadsheets for other countries as well.
+Excel naive projection of COVID-19 in selected countries:
+* Australia
+* India
+* Indonesia
+* USA
 
 In reality, growth should slow with isolation and quarantine measures and as people get over the infection they in turn will create a herd immunity, and so the infection can burn itself out.  
 
