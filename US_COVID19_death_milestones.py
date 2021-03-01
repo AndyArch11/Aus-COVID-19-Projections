@@ -303,8 +303,8 @@ def total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, mortality
 
 def animated_total_covid_deaths_horiz_plotly(title, usdf, scale, usmortalitydf, mortality_count_column, mortality_type_column, unit, date_from):
     number_frames = (usdf.index[-1] - date_from).days + 1
-    frame_duration = 300
-    frame_transition_duration = 200
+    frame_duration = 150
+    frame_transition_duration = 100
 
     us_sorted_mortality = usmortalitydf.sort_values(by=mortality_count_column, ascending=True)
     init_x_data = us_sorted_mortality[mortality_count_column]
@@ -449,14 +449,14 @@ def main():
     #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_full, 'log', us_leading_causes_df, 'US Deaths', 'Leading Causes', ' US deaths', year_start)
     #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_full, 'log', us_epidemics_df, 'US Deaths', 'Epidemic', ' US deaths', year_start)
 
-    #animated_total_covid_deaths_horiz_plotly('US Conflicts', usdf_cases, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' US deaths', date_first_covid_case)
-    #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_cases, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_case)
-    #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_cases, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_case)
+    animated_total_covid_deaths_horiz_plotly('US Conflicts', usdf_cases, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' US deaths', date_first_covid_case)
+    animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf_cases, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_case)
+    animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf_cases, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_case)
 
-    #animated_total_covid_deaths_horiz_plotly('US Conflicts', usdf, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' US deaths', date_first_covid_death)
-    #animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_death)
-    #animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_death)
-    #exit()
+    animated_total_covid_deaths_horiz_plotly('US Conflicts', usdf, 'log', us_conflicts_df, 'US Deaths', 'Conflict', ' US deaths', date_first_covid_death)
+    animated_total_covid_deaths_horiz_plotly('US Leading Causes of Death of 2019', usdf, 'log', us_leading_causes_df, 'Daily Deaths', 'Leading Causes', ' US deaths', date_first_covid_death)
+    animated_total_covid_deaths_horiz_plotly('US Epidemics', usdf, 'log', us_epidemics_df, 'Daily Deaths', 'Epidemic', ' US deaths', date_first_covid_death)
+    exit()
 
     #_______________________________________________________________________________________________________________________________________________
 
